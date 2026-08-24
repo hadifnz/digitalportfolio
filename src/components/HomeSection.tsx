@@ -10,7 +10,7 @@ export default async function HomeSection() {
       {/* Huge PORTFOLIO text in the background */}
       <FadeIn delay={0.1} direction="up" className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
         <h1 
-          className="text-[15vw] md:text-[20vw] text-white drop-shadow-2xl whitespace-nowrap"
+          className="text-[35vw] md:text-[20vw] text-white drop-shadow-2xl whitespace-nowrap"
           style={{ fontFamily: "'Hey Gotcha', cursive" }}
         >
           PORTFOLIO
