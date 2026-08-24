@@ -95,7 +95,7 @@ export default function Navigation({ logoUrl }: { logoUrl?: string }) {
           </nav>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center mr-2">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-300 hover:text-white focus:outline-none"
@@ -108,8 +108,8 @@ export default function Navigation({ logoUrl }: { logoUrl?: string }) {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-brand-blue/95 border-b border-white/10">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="md:hidden bg-brand-blue/30 backdrop-blur-lg border-b border-white/10 shadow-xl">
+          <div className="px-4 pt-4 pb-6 space-y-2 sm:px-3">
             {navLinks.map((link) => (
               <a
                 key={link.name}
