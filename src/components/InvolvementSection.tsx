@@ -1,6 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { createClient } from "@/utils/supabase/server";
 import FadeIn from "./FadeIn";
+import InvolvementGrid from "./InvolvementGrid";
 
 export default async function InvolvementSection() {
   const supabase = createClient();
