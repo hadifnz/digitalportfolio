@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 10, 42, 67;
+  --background-end-rgb: 6, 26, 42;
+  --font-heygotcha: 'Hey Gotcha', cursive;
+  --font-canvasans: 'Canva Sans', sans-serif;
+}
+
+@font-face {
+  font-family: 'Hey Gotcha';
+  src: url('/fonts/HeyGotcha.otf?v=2') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Canva Sans';
+  src: url('/fonts/CanvaSans.otf?v=2') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
