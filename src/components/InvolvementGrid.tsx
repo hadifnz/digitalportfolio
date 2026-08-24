@@ -42,16 +42,16 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
   return (
     <div
       ref={scrollRef}
-      className="flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-8 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none w-full custom-scrollbar"
+      className="grid grid-rows-2 grid-flow-col auto-cols-[75vw] overflow-x-auto snap-x snap-mandatory gap-4 pb-8 md:grid-rows-none md:grid-flow-row md:grid-cols-2 lg:grid-cols-4 md:auto-cols-auto md:overflow-visible md:snap-none w-full custom-scrollbar"
     >
       {involvements?.map((inv: any, idx: number) => (
         <FadeIn
           key={inv.id}
           delay={0.3 + idx * 0.1}
           direction="up"
-          className="group relative shrink-0 snap-start w-[42vw] sm:w-[45vw] md:w-full aspect-square bg-white/5 border border-white/10 overflow-hidden cursor-pointer hover:border-brand-light-blue transition-colors"
+          className="group relative snap-start w-full aspect-square bg-white/5 border border-white/10 overflow-hidden cursor-pointer hover:border-brand-light-blue transition-colors"
         >
-          <div className="absolute inset-0 p-3 sm:p-6 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity bg-brand-blue/90 z-20">
+          <div className="absolute inset-0 p-4 sm:p-6 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity bg-brand-blue/90 z-20">
             <div className="shrink-0 mb-2 sm:mb-4">
               <span className="text-brand-light-blue font-heading text-lg sm:text-xl">{inv.year}</span>
               <h3 className="text-white font-bold text-sm sm:text-lg mt-1 sm:mt-2 leading-tight">{inv.title}</h3>
