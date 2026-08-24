@@ -11,20 +11,20 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
       (entries) => {
         const entry = entries[0];
         if (entry.isIntersecting) {
-          // Trigger nudge after 2 seconds
+          // Trigger nudge after 3 seconds (slower)
           setTimeout(() => {
             if (scrollRef.current) {
               // Nudge right
-              scrollRef.current.scrollBy({ left: 100, behavior: "smooth" });
+              scrollRef.current.scrollBy({ left: 80, behavior: "smooth" });
 
-              // Nudge back after a short pause
+              // Nudge back after a longer pause
               setTimeout(() => {
                 if (scrollRef.current) {
-                  scrollRef.current.scrollBy({ left: -100, behavior: "smooth" });
+                  scrollRef.current.scrollBy({ left: -80, behavior: "smooth" });
                 }
-              }, 600);
+              }, 1200);
             }
-          }, 2000);
+          }, 3000);
           
           observer.disconnect(); // only do it once
         }
@@ -42,23 +42,23 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
   return (
     <div
       ref={scrollRef}
-      className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none w-full custom-scrollbar"
+      className="flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-8 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none w-full custom-scrollbar"
     >
       {involvements?.map((inv: any, idx: number) => (
         <FadeIn
           key={inv.id}
           delay={0.3 + idx * 0.1}
           direction="up"
-          className="group relative shrink-0 snap-center w-[75vw] md:w-full aspect-square bg-white/5 border border-white/10 overflow-hidden cursor-pointer hover:border-brand-light-blue transition-colors"
+          className="group relative shrink-0 snap-start w-[42vw] sm:w-[45vw] md:w-full aspect-square bg-white/5 border border-white/10 overflow-hidden cursor-pointer hover:border-brand-light-blue transition-colors"
         >
-          <div className="absolute inset-0 p-6 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity bg-brand-blue/90 z-20">
-            <div className="shrink-0 mb-4">
-              <span className="text-brand-light-blue font-heading text-xl">{inv.year}</span>
-              <h3 className="text-white font-bold text-lg mt-2 leading-tight">{inv.title}</h3>
-              <p className="text-white/80 text-sm mt-1">{inv.organization}</p>
+          <div className="absolute inset-0 p-3 sm:p-6 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity bg-brand-blue/90 z-20">
+            <div className="shrink-0 mb-2 sm:mb-4">
+              <span className="text-brand-light-blue font-heading text-lg sm:text-xl">{inv.year}</span>
+              <h3 className="text-white font-bold text-sm sm:text-lg mt-1 sm:mt-2 leading-tight">{inv.title}</h3>
+              <p className="text-white/80 text-xs sm:text-sm mt-1 line-clamp-2 sm:line-clamp-none">{inv.organization}</p>
             </div>
-            <div className="overflow-y-auto flex-grow pr-2 custom-scrollbar">
-              <p className="text-gray-300 text-sm">{inv.description}</p>
+            <div className="overflow-y-auto flex-grow pr-1 custom-scrollbar">
+              <p className="text-gray-300 text-xs sm:text-sm">{inv.description}</p>
             </div>
           </div>
 
