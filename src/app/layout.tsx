@@ -7,6 +7,7 @@ const oswald = Oswald({ subsets: ["latin"], variable: "--font-oswald", display: 
 
 import Navigation from "@/components/Navigation";
 import { createClient } from "@/utils/supabase/server";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Portfolio | Muhammad Hadif",
@@ -46,6 +47,8 @@ export default async function RootLayout({
         <div className="relative z-0">
           {children}
         </div>
+        
+        <Analytics />
       </body>
     </html>
   );
