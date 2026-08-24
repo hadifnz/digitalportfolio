@@ -23,7 +23,7 @@ export default async function InvolvementSection() {
                     <h3 className="text-white font-bold text-lg mt-2 leading-tight">{inv.title}</h3>
                     <p className="text-white/80 text-sm mt-1">{inv.organization}</p>
                   </div>
-                  <div className="overflow-y-auto flex-grow pr-2">
+                  <div className="overflow-y-auto flex-grow pr-2 custom-scrollbar">
                     <p className="text-gray-300 text-sm">{inv.description}</p>
                   </div>
                 </div>
