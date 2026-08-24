@@ -2,6 +2,7 @@
 
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useRef, useEffect } from "react";
+import { smoothScrollBy } from "@/utils/smoothScroll";
 
 export default function ProjectsCarousel({ projects }: { projects: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -11,20 +12,20 @@ export default function ProjectsCarousel({ projects }: { projects: any[] }) {
       (entries) => {
         const entry = entries[0];
         if (entry.isIntersecting) {
-          // Trigger nudge after 3 seconds (slower)
+          // Trigger nudge after 2 seconds
           setTimeout(() => {
             if (scrollRef.current) {
-              // Nudge right
-              scrollRef.current.scrollBy({ left: 80, behavior: "smooth" });
+              // Nudge right (800ms duration for slower visible animation)
+              smoothScrollBy(scrollRef.current, 80, 800);
 
-              // Nudge back after a longer pause
+              // Nudge back after scroll completes + short pause
               setTimeout(() => {
                 if (scrollRef.current) {
-                  scrollRef.current.scrollBy({ left: -80, behavior: "smooth" });
+                  smoothScrollBy(scrollRef.current, -80, 800);
                 }
               }, 1200);
             }
-          }, 3000);
+          }, 2000);
           
           observer.disconnect(); // only do it once
         }
