@@ -1,10 +1,43 @@
 "use client";
 
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 export default function ProjectsCarousel({ projects }: { projects: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          // Trigger nudge after 3 seconds (slower)
+          setTimeout(() => {
+            if (scrollRef.current) {
+              // Nudge right
+              scrollRef.current.scrollBy({ left: 80, behavior: "smooth" });
+
+              // Nudge back after a longer pause
+              setTimeout(() => {
+                if (scrollRef.current) {
+                  scrollRef.current.scrollBy({ left: -80, behavior: "smooth" });
+                }
+              }, 1200);
+            }
+          }, 3000);
+          
+          observer.disconnect(); // only do it once
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (scrollRef.current) {
+      observer.observe(scrollRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
