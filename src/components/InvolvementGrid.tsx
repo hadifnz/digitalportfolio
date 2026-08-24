@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import FadeIn from "./FadeIn";
-import { smoothScrollBy } from "@/utils/smoothScroll";
+import { smoothScrollBy, nudgeScrollSequence } from "@/utils/smoothScroll";
 
 export default function InvolvementGrid({ involvements }: { involvements: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -15,15 +15,8 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
           // Trigger nudge after 2 seconds
           setTimeout(() => {
             if (scrollRef.current) {
-              // Nudge right (800ms duration for slower visible animation)
-              smoothScrollBy(scrollRef.current, 80, 800);
-
-              // Nudge back after scroll completes + short pause
-              setTimeout(() => {
-                if (scrollRef.current) {
-                  smoothScrollBy(scrollRef.current, -80, 800);
-                }
-              }, 1200);
+              // Perform the full right -> pause -> left sequence safely without snap breaking
+              nudgeScrollSequence(scrollRef.current, 80, 800, 1200);
             }
           }, 2000);
           
