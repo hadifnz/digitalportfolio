@@ -27,7 +27,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       {/* We add our global font classes here. The custom fonts are loaded via globals.css */}
-      <body className={`${inter.variable} ${oswald.variable} font-body bg-brand-blue text-brand-text antialiased min-h-screen relative`}>
+      <body className={`${inter.variable} ${oswald.variable} font-body bg-brand-blue text-brand-text antialiased min-h-screen relative overflow-x-hidden`}>
         {/* Global Background */}
         {settings?.hero_bg_url ? (
           <div 

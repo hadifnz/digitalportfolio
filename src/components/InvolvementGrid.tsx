@@ -15,10 +15,11 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
   };
 
   return (
-    <div className="relative w-full group">
+    <div className="relative w-full group/carousel">
       <div
         ref={scrollRef}
-        className="grid grid-rows-2 grid-flow-col auto-cols-[75vw] md:auto-cols-[40%] lg:auto-cols-[23%] overflow-x-auto snap-x snap-mandatory gap-4 pb-8 w-full custom-scrollbar scroll-smooth"
+        className="grid grid-rows-2 grid-flow-col auto-cols-[75vw] md:auto-cols-[40%] lg:auto-cols-[23%] overflow-x-auto snap-x snap-mandatory gap-4 pb-8 w-full scroll-smooth [&::-webkit-scrollbar]:hidden"
+        style={{ scrollbarWidth: 'none' }}
       >
       {involvements?.map((inv: any, idx: number) => (
         <FadeIn
@@ -33,7 +34,7 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
               <h3 className="text-white font-bold text-sm sm:text-lg mt-1 sm:mt-2 leading-tight">{inv.title}</h3>
               <p className="text-white/80 text-xs sm:text-sm mt-1 line-clamp-2 sm:line-clamp-none">{inv.organization}</p>
             </div>
-            <div className="overflow-y-auto flex-grow pr-1 custom-scrollbar">
+            <div className="overflow-y-auto flex-grow pr-1 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
               <p className="text-gray-300 text-xs sm:text-sm">{inv.description}</p>
             </div>
           </div>
@@ -61,13 +62,13 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
         <div className="hidden lg:flex absolute top-[calc(50%-1rem)] -translate-y-1/2 w-[calc(100%+6rem)] -left-12 justify-between pointer-events-none">
           <button 
             onClick={() => scroll('left')} 
-            className="pointer-events-auto w-12 h-12 bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer opacity-0 group-hover:opacity-100"
+            className="pointer-events-auto w-12 h-12 bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer opacity-0 group-hover/carousel:opacity-100"
           >
              <ChevronLeft className="w-6 h-6" strokeWidth={2} />
           </button>
           <button 
             onClick={() => scroll('right')} 
-            className="pointer-events-auto w-12 h-12 bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer opacity-0 group-hover:opacity-100"
+            className="pointer-events-auto w-12 h-12 bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer opacity-0 group-hover/carousel:opacity-100"
           >
              <ChevronRight className="w-6 h-6" strokeWidth={2} />
           </button>
