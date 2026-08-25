@@ -29,10 +29,22 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
 
   return (
     <div className="relative w-full group/carousel flex flex-col">
+      {/* Scroll Progress Bar (Top) */}
+      {involvements && involvements.length > 2 && (
+        <div className="w-full px-8 mb-6 lg:mb-8 flex justify-center">
+          <div className="w-full max-w-[300px] h-1.5 bg-white/10 rounded-full overflow-hidden relative">
+            <div 
+              className="absolute top-0 left-0 h-full bg-brand-light-blue transition-all duration-300 ease-out rounded-full"
+              style={{ width: `${Math.max(scrollProgress, 15)}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       <div
         ref={scrollRef}
         onScroll={updateProgress}
-        className="grid grid-rows-2 grid-flow-col auto-cols-[75vw] md:auto-cols-[40%] lg:auto-cols-[23%] overflow-x-auto snap-x snap-mandatory gap-4 pb-4 lg:pb-8 w-full scroll-smooth [&::-webkit-scrollbar]:hidden"
+        className="grid grid-rows-2 grid-flow-col auto-cols-[85vw] sm:auto-cols-[40%] lg:auto-cols-[23%] overflow-x-auto snap-x snap-mandatory gap-4 pb-4 lg:pb-8 w-full scroll-smooth [&::-webkit-scrollbar]:hidden"
         style={{ scrollbarWidth: 'none' }}
       >
       {involvements?.map((inv: any, idx: number) => (
@@ -40,7 +52,7 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
           key={inv.id}
           delay={0.3 + idx * 0.1}
           direction="up"
-          className="group relative snap-start w-full aspect-square bg-white/5 border border-white/10 overflow-hidden cursor-pointer hover:border-brand-light-blue transition-colors"
+          className="group relative snap-center w-full aspect-square bg-white/5 border border-white/10 overflow-hidden cursor-pointer hover:border-brand-light-blue transition-colors"
         >
           <div className="absolute inset-0 p-4 sm:p-6 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity bg-brand-blue/90 z-20">
             <div className="shrink-0 mb-2 sm:mb-4">
@@ -86,18 +98,6 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
           >
              <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6" strokeWidth={2} />
           </button>
-        </div>
-      )}
-
-      {/* Scroll Progress Bar for Mobile */}
-      {involvements && involvements.length > 2 && (
-        <div className="lg:hidden w-full px-8 mt-4 mb-2 flex justify-center">
-          <div className="w-full max-w-[200px] h-1.5 bg-white/10 rounded-full overflow-hidden relative">
-            <div 
-              className="absolute top-0 left-0 h-full bg-brand-light-blue transition-all duration-300 ease-out rounded-full"
-              style={{ width: `${Math.max(scrollProgress, 15)}%` }}
-            />
-          </div>
         </div>
       )}
     </div>

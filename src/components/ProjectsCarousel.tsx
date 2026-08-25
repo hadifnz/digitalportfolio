@@ -28,6 +28,18 @@ export default function ProjectsCarousel({ projects }: { projects: any[] }) {
 
   return (
     <div className="w-full relative group flex flex-col">
+      {/* Scroll Progress Bar (Top) */}
+      {projects && projects.length > 1 && (
+        <div className="w-full px-8 mb-6 lg:mb-12 flex justify-center">
+          <div className="w-full max-w-[300px] h-1.5 bg-white/10 rounded-full overflow-hidden relative">
+            <div 
+              className="absolute top-0 left-0 h-full bg-brand-light-blue transition-all duration-300 ease-out rounded-full"
+              style={{ width: `${Math.max(scrollProgress, 15)}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Projects Carousel */}
       <div ref={scrollRef} onScroll={updateProgress} className="w-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 lg:pb-8 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none' }}>
         {projects?.map((project: any) => {
@@ -105,7 +117,7 @@ export default function ProjectsCarousel({ projects }: { projects: any[] }) {
       
       {/* Scroll Hint / Carousel Indicator */}
       {projects && projects.length > 1 && (
-        <div className="flex absolute top-1/2 -translate-y-1/2 w-full justify-between pointer-events-none px-2 lg:px-0 z-30">
+        <div className="flex absolute top-[calc(50%+1.5rem)] -translate-y-1/2 w-full justify-between pointer-events-none px-2 lg:px-0 z-30">
           <button 
             onClick={() => scroll('left')} 
             className="pointer-events-auto w-10 h-10 lg:w-12 lg:h-12 bg-black/40 lg:bg-white/10 backdrop-blur rounded-full flex items-center justify-center text-white/90 lg:text-white/70 hover:text-white hover:bg-white/20 border border-white/20 lg:-ml-16 transition-colors shadow-lg cursor-pointer"
@@ -118,18 +130,6 @@ export default function ProjectsCarousel({ projects }: { projects: any[] }) {
           >
              <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6" strokeWidth={2} />
           </button>
-        </div>
-      )}
-
-      {/* Scroll Progress Bar for Mobile */}
-      {projects && projects.length > 1 && (
-        <div className="lg:hidden w-full px-8 mt-4 flex justify-center">
-          <div className="w-full max-w-[200px] h-1.5 bg-white/10 rounded-full overflow-hidden relative">
-            <div 
-              className="absolute top-0 left-0 h-full bg-brand-light-blue transition-all duration-300 ease-out rounded-full"
-              style={{ width: `${Math.max(scrollProgress, 15)}%` }}
-            />
-          </div>
         </div>
       )}
     </div>
