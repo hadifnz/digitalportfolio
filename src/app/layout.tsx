@@ -9,10 +9,18 @@ import Navigation from "@/components/Navigation";
 import { createClient } from "@/utils/supabase/server";
 import { Analytics } from "@vercel/analytics/react";
 
-export const metadata: Metadata = {
-  title: "Portfolio | Muhammad Hadif",
-  description: "Digital Portfolio of Muhammad Hadif",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const supabase = createClient();
+  const { data: settings } = await supabase.from('site_settings').select('logo_url').limit(1).single();
+  
+  return {
+    title: "Portfolio | Muhammad Hadif",
+    description: "Digital Portfolio of Muhammad Hadif",
+    icons: {
+      icon: settings?.logo_url || '/favicon.ico', // Automatically syncs browser tab icon with your logo!
+    }
+  };
+}
 
 export const dynamic = 'force-dynamic';
 
