@@ -11,13 +11,13 @@ import { Analytics } from "@vercel/analytics/react";
 
 export async function generateMetadata(): Promise<Metadata> {
   const supabase = createClient();
-  const { data: settings } = await supabase.from('site_settings').select('logo_url').limit(1).single();
+  const { data: settings } = await supabase.from('site_settings').select('favicon_url').limit(1).single();
   
   return {
     title: "Portfolio | Muhammad Hadif",
     description: "Digital Portfolio of Muhammad Hadif",
     icons: {
-      icon: settings?.logo_url || '/favicon.ico', // Automatically syncs browser tab icon with your logo!
+      icon: settings?.favicon_url || '/favicon.ico',
     }
   };
 }

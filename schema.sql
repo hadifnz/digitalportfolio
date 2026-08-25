@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS public.site_settings (
     linkedin_url TEXT,
     resume_url TEXT,
     logo_url TEXT,
+    favicon_url TEXT,
     hero_bg_url TEXT,
     hero_image_url TEXT,
     kyouth_logo_url TEXT,

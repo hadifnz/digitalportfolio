@@ -15,6 +15,7 @@ export default function AdminSettings() {
       hero_name: "",
       hero_description: "",
       logo_url: "",
+      favicon_url: "",
       hero_bg_url: "",
       hero_image_url: "",
     }
@@ -87,6 +88,7 @@ export default function AdminSettings() {
     const finalData = {
       ...data,
       logo_url: currentFormValues.logo_url,
+      favicon_url: currentFormValues.favicon_url,
       hero_bg_url: currentFormValues.hero_bg_url,
       hero_image_url: currentFormValues.hero_image_url,
     };
@@ -143,7 +145,7 @@ export default function AdminSettings() {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Logo Upload */}
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-2">Navbar Logo</label>
@@ -154,6 +156,20 @@ export default function AdminSettings() {
                 <label className="flex justify-center items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg cursor-pointer transition-colors text-sm">
                   <span>{uploading ? "..." : "Upload Logo"}</span>
                   <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'logo_url')} className="hidden" disabled={uploading} />
+                </label>
+              </div>
+            </div>
+
+            {/* Favicon Upload */}
+            <div>
+              <label className="block text-sm font-medium text-gray-400 mb-2">Tab Icon (Favicon)</label>
+              <div className="flex flex-col space-y-2">
+                {currentFormValues.favicon_url && (
+                  <img src={currentFormValues.favicon_url} alt="Favicon" className="h-12 w-12 object-contain bg-white/10 rounded-lg p-2 mx-auto" />
+                )}
+                <label className="flex justify-center items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg cursor-pointer transition-colors text-sm">
+                  <span>{uploading ? "..." : "Upload Icon"}</span>
+                  <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'favicon_url')} className="hidden" disabled={uploading} />
                 </label>
               </div>
             </div>
