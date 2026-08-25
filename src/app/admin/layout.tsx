@@ -2,13 +2,20 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Users, FileText, Image as ImageIcon, Briefcase, Settings, LogOut, GraduationCap, Mail } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Image as ImageIcon, Briefcase, Settings, LogOut, GraduationCap, Mail, Menu, X } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
+import { useState, useEffect } from "react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [pathname]);
 
   // If we are on the login page, don't show the sidebar
   if (pathname === '/admin/login') {
@@ -34,10 +41,30 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="flex h-screen bg-gray-900 text-white font-body">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-900 text-white font-body overflow-hidden">
+      
+      {/* Mobile Topbar */}
+      <div className="md:hidden flex items-center justify-between h-16 px-4 bg-gray-950 border-b border-white/10 shrink-0">
+        <span className="font-heading text-xl tracking-widest text-brand-light-blue">ADMIN PANEL</span>
+        <button 
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
+          className="text-gray-300 hover:text-white"
+        >
+          {isMobileOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
+
+      {/* Sidebar Overlay (Mobile) */}
+      {isMobileOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/60 z-40"
+          onClick={() => setIsMobileOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-950 border-r border-white/10 flex flex-col">
-        <div className="h-20 flex items-center px-6 border-b border-white/10">
+      <aside className={`fixed md:relative z-50 w-64 h-full bg-gray-950 border-r border-white/10 flex flex-col transition-transform duration-300 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
+        <div className="hidden md:flex h-20 items-center px-6 border-b border-white/10 shrink-0">
           <span className="font-heading text-2xl tracking-widest text-brand-light-blue">ADMIN PANEL</span>
         </div>
         

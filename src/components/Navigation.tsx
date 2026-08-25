@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Navigation({ logoUrl }: { logoUrl?: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const pathname = usePathname();
 
   const navLinks = [
     { name: "HOME", id: "home" },
@@ -14,6 +16,10 @@ export default function Navigation({ logoUrl }: { logoUrl?: string }) {
     { name: "PROJECT", id: "projects" },
     { name: "K-YOUTH", id: "k-youth" },
   ];
+
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
 
   useEffect(() => {
     const handleScroll = () => {
