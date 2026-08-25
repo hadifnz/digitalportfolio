@@ -1,11 +1,24 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import FadeIn from "./FadeIn";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
 export default function InvolvementGrid({ involvements }: { involvements: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  const updateProgress = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      const progress = scrollWidth > clientWidth ? (scrollLeft / (scrollWidth - clientWidth)) * 100 : 0;
+      setScrollProgress(progress);
+    }
+  };
+
+  useEffect(() => {
+    updateProgress();
+  }, [involvements]);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -15,10 +28,11 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
   };
 
   return (
-    <div className="relative w-full group/carousel">
+    <div className="relative w-full group/carousel flex flex-col">
       <div
         ref={scrollRef}
-        className="grid grid-rows-2 grid-flow-col auto-cols-[75vw] md:auto-cols-[40%] lg:auto-cols-[23%] overflow-x-auto snap-x snap-mandatory gap-4 pb-8 w-full scroll-smooth [&::-webkit-scrollbar]:hidden"
+        onScroll={updateProgress}
+        className="grid grid-rows-2 grid-flow-col auto-cols-[75vw] md:auto-cols-[40%] lg:auto-cols-[23%] overflow-x-auto snap-x snap-mandatory gap-4 pb-4 lg:pb-8 w-full scroll-smooth [&::-webkit-scrollbar]:hidden"
         style={{ scrollbarWidth: 'none' }}
       >
       {involvements?.map((inv: any, idx: number) => (
@@ -57,21 +71,33 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
       )}
       </div>
 
-      {/* Scroll Arrows for Desktop */}
+      {/* Scroll Arrows (Visible on mobile, fade in on desktop) */}
       {involvements && involvements.length > 2 && (
-        <div className="hidden lg:flex absolute top-[calc(50%-1rem)] -translate-y-1/2 w-[calc(100%+6rem)] -left-12 justify-between pointer-events-none">
+        <div className="flex absolute top-[calc(50%-1.5rem)] lg:top-[calc(50%-1rem)] -translate-y-1/2 w-full lg:w-[calc(100%+6rem)] left-0 lg:-left-12 justify-between pointer-events-none px-2 lg:px-0 z-30">
           <button 
             onClick={() => scroll('left')} 
-            className="pointer-events-auto w-12 h-12 bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer opacity-0 group-hover/carousel:opacity-100"
+            className="pointer-events-auto w-10 h-10 lg:w-12 lg:h-12 bg-black/40 lg:bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/90 lg:text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer lg:opacity-0 group-hover/carousel:opacity-100"
           >
-             <ChevronLeft className="w-6 h-6" strokeWidth={2} />
+             <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6" strokeWidth={2} />
           </button>
           <button 
             onClick={() => scroll('right')} 
-            className="pointer-events-auto w-12 h-12 bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer opacity-0 group-hover/carousel:opacity-100"
+            className="pointer-events-auto w-10 h-10 lg:w-12 lg:h-12 bg-black/40 lg:bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/90 lg:text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer lg:opacity-0 group-hover/carousel:opacity-100"
           >
-             <ChevronRight className="w-6 h-6" strokeWidth={2} />
+             <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6" strokeWidth={2} />
           </button>
+        </div>
+      )}
+
+      {/* Scroll Progress Bar for Mobile */}
+      {involvements && involvements.length > 2 && (
+        <div className="lg:hidden w-full px-8 mt-4 mb-2 flex justify-center">
+          <div className="w-full max-w-[200px] h-1.5 bg-white/10 rounded-full overflow-hidden relative">
+            <div 
+              className="absolute top-0 left-0 h-full bg-brand-light-blue transition-all duration-300 ease-out rounded-full"
+              style={{ width: `${Math.max(scrollProgress, 15)}%` }}
+            />
+          </div>
         </div>
       )}
     </div>

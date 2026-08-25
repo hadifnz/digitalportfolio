@@ -33,9 +33,9 @@ export default async function RootLayout({
   const { data: settings } = await supabase.from('site_settings').select('logo_url, hero_bg_url').limit(1).single();
 
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       {/* We add our global font classes here. The custom fonts are loaded via globals.css */}
-      <body className={`${inter.variable} ${oswald.variable} font-body bg-brand-blue text-brand-text antialiased min-h-screen relative overflow-x-hidden`}>
+      <body className={`${inter.variable} ${oswald.variable} font-body bg-brand-blue text-brand-text antialiased min-h-screen relative overflow-x-hidden w-full max-w-[100vw]`}>
         {/* Global Background */}
         {settings?.hero_bg_url ? (
           <div 
