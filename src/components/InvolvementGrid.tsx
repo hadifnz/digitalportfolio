@@ -44,7 +44,7 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
       <div
         ref={scrollRef}
         onScroll={updateProgress}
-        className="grid grid-rows-2 grid-flow-col auto-cols-[85vw] sm:auto-cols-[40%] lg:auto-cols-[23%] overflow-x-auto snap-x snap-mandatory gap-4 pb-4 lg:pb-8 w-full scroll-smooth [&::-webkit-scrollbar]:hidden"
+        className="grid grid-rows-2 grid-flow-col auto-cols-[100%] sm:auto-cols-[40%] lg:auto-cols-[23%] overflow-x-auto snap-x snap-mandatory gap-4 pb-4 lg:pb-8 w-full scroll-smooth [&::-webkit-scrollbar]:hidden"
         style={{ scrollbarWidth: 'none' }}
       >
       {involvements?.map((inv: any, idx: number) => (
