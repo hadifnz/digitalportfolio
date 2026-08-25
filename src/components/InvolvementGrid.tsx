@@ -1,43 +1,25 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import FadeIn from "./FadeIn";
-import { smoothScrollBy, nudgeScrollSequence } from "@/utils/smoothScroll";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 
 export default function InvolvementGrid({ involvements }: { involvements: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          // Trigger nudge after 2 seconds
-          setTimeout(() => {
-            if (scrollRef.current) {
-              // Perform the full right -> pause -> left sequence safely without snap breaking
-              nudgeScrollSequence(scrollRef.current, 80, 800, 1200);
-            }
-          }, 2000);
-          
-          observer.disconnect(); // only do it once
-        }
-      },
-      { threshold: 0.5 }
-    );
-
+  const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      observer.observe(scrollRef.current);
+      const scrollAmount = scrollRef.current.clientWidth * 0.75;
+      scrollRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
     }
-
-    return () => observer.disconnect();
-  }, []);
+  };
 
   return (
-    <div
-      ref={scrollRef}
-      className="grid grid-rows-2 grid-flow-col auto-cols-[75vw] overflow-x-auto snap-x snap-mandatory gap-4 pb-8 md:grid-rows-none md:grid-flow-row md:grid-cols-2 lg:grid-cols-4 md:auto-cols-auto md:overflow-visible md:snap-none w-full custom-scrollbar"
-    >
+    <div className="relative w-full group">
+      <div
+        ref={scrollRef}
+        className="grid grid-rows-2 grid-flow-col auto-cols-[75vw] md:auto-cols-[40%] lg:auto-cols-[23%] overflow-x-auto snap-x snap-mandatory gap-4 pb-8 w-full custom-scrollbar scroll-smooth"
+      >
       {involvements?.map((inv: any, idx: number) => (
         <FadeIn
           key={inv.id}
@@ -71,6 +53,25 @@ export default function InvolvementGrid({ involvements }: { involvements: any[] 
       ))}
       {!involvements?.length && (
         <p className="text-gray-500 italic col-span-full text-center">No involvement records.</p>
+      )}
+      </div>
+
+      {/* Scroll Arrows for Desktop */}
+      {involvements && involvements.length > 2 && (
+        <div className="hidden lg:flex absolute top-[calc(50%-1rem)] -translate-y-1/2 w-[calc(100%+6rem)] -left-12 justify-between pointer-events-none">
+          <button 
+            onClick={() => scroll('left')} 
+            className="pointer-events-auto w-12 h-12 bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer opacity-0 group-hover:opacity-100"
+          >
+             <ChevronLeft className="w-6 h-6" strokeWidth={2} />
+          </button>
+          <button 
+            onClick={() => scroll('right')} 
+            className="pointer-events-auto w-12 h-12 bg-white/5 backdrop-blur rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 border border-white/10 transition-colors cursor-pointer opacity-0 group-hover:opacity-100"
+          >
+             <ChevronRight className="w-6 h-6" strokeWidth={2} />
+          </button>
+        </div>
       )}
     </div>
   );

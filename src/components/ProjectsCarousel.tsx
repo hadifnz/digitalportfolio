@@ -1,37 +1,10 @@
 "use client";
 
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import { useRef, useEffect } from "react";
-import { smoothScrollBy, nudgeScrollSequence } from "@/utils/smoothScroll";
+import { useRef } from "react";
 
 export default function ProjectsCarousel({ projects }: { projects: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          // Trigger nudge after 2 seconds
-          setTimeout(() => {
-            if (scrollRef.current) {
-              // Perform the full right -> pause -> left sequence safely without snap breaking
-              nudgeScrollSequence(scrollRef.current, 80, 800, 1200);
-            }
-          }, 2000);
-          
-          observer.disconnect(); // only do it once
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (scrollRef.current) {
-      observer.observe(scrollRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {

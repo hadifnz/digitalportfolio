@@ -14,13 +14,8 @@ export default async function InvolvementSection() {
           <h2 className="text-5xl md:text-7xl font-heading text-brand-text mb-16 uppercase tracking-wider text-center">INVOLVEMENT</h2>
         </FadeIn>
         
-        <div className="relative w-full">
+        <div className="w-full">
           <InvolvementGrid involvements={involvements || []} />
-
-          {/* Right Arrow (Carousel feel) */}
-          <button className="hidden lg:flex absolute -right-16 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors">
-            <ChevronRight className="w-16 h-16" strokeWidth={1} />
-          </button>
         </div>
       </div>
     </section>
